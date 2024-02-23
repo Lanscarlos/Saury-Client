@@ -32,3 +32,25 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.mount('#app')
+
+router.beforeEach((to, from, next) => {
+    switch (to.name) {
+        case 'login':
+        case 'register': {
+            next()
+            break;
+        }
+        case 'profile': {
+            if (vuex.state.user == null) {
+                // 用户未登录
+                next({ name: 'login' })
+            } else {
+                next()
+            }
+            break;
+        }
+        default: {
+            next()
+        }
+    }
+})

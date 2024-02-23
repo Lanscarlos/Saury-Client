@@ -3,7 +3,8 @@ import { createStore } from 'vuex';
 export default createStore({
     state() {
         return {
-            user:null,
+            user: null,
+            profile: null,
             cart: {
                 id: 0,
                 items: [],
@@ -12,10 +13,10 @@ export default createStore({
             /* 搜索结果 */
             search: null,
             orders: [],
-            discount:[],
-            order_item:[],
-            order_id:0,
-            order_index:0
+            discount: [],
+            order_item:[ ],
+            order_id: 0,
+            order_index: 0
         }
     }
 })

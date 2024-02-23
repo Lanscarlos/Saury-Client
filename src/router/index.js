@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/HomePage';
 import Recommendation from "@/components/RecommendationPage";
 import Profile from '../components/ProfilePage';
+import Login from "@/components/LoginPage";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
             path: '/profile',
             name: 'profile',
             component: Profile
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
         }
     ]
 });
