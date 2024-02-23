@@ -1,62 +1,42 @@
 <template>
   <div class="container">
-    <el-card shadow="hover">
-
-
-
-
-      <template #header>
-        <el-container>
-          <el-aside width="128px">
-            <el-avatar :size="64" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"/>
-          </el-aside>
-          <el-main>
-            <h1>账号登录</h1>
-          </el-main>
-        </el-container>
-      </template>
-
+    <el-card class="outer" :body-style="{ padding: '0px' }">
       <el-container>
-        <el-main>
-
-          <el-form :model="form" label-width="120px">
-            <el-form-item label="邮箱">
-              <el-input v-model="form.email">
+        <el-aside width="30%" class="inner">
+          <div class="inner-header">
+            <el-avatar :size="64" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
+          </div>
+          <el-form :model="form" label-width="0px">
+            <el-form-item>
+              <el-input v-model="form.email" placeholder="邮箱">
                 <template #prefix>
                   <i class="bi bi-envelope"></i>
                 </template>
               </el-input>
             </el-form-item>
-            <el-form-item label="密码">
-              <el-input v-model="form.password">
+            <el-form-item>
+              <el-input v-model="form.password" placeholder="密码">
                 <template #prefix>
                   <i class="bi bi-eye-slash"></i>
                 </template>
               </el-input>
             </el-form-item>
-            <el-form-item label="验证码">
-              <el-input v-model="form.code">
+            <el-form-item>
+              <el-input v-model="form.code" placeholder="验证码">
                 <template #prefix>
                   <i class="bi bi-question-circle"></i>
                 </template>
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">登录</el-button>
-              <el-button>取消</el-button>
+              <el-button class="btn-login" type="primary" @click="onSubmit">登录账号</el-button>
+            </el-form-item>
+            <el-form-item>
+              <el-button class="btn-register">注册账号</el-button>
             </el-form-item>
           </el-form>
-        </el-main>
+        </el-aside>
       </el-container>
-
-      <template #footer>
-        <el-button type="info">
-          <i class="bi bi-github"></i>&nbsp; 使用 Github 登录
-        </el-button>
-        <el-button type="success">
-          <i class="bi bi-box-arrow-in-right"></i>&nbsp; 立即注册
-        </el-button>
-      </template>
     </el-card>
   </div>
 </template>
@@ -120,10 +100,27 @@ export default {
 
 <style scoped>
 .container {
-  padding-left: 256px;
-  padding-right: 256px;
+  /*padding-left: 256px;*/
+  /*padding-right: 256px;*/
 }
-el-main {
-  padding-right: 300px;
+.outer {
+  background-image: url("../assets/background.png");
+  border-radius: 20px;
+}
+.outer:hover {
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+.inner {
+  padding: 200px 64px;
+  background: rgba(200, 200, 200, 0.3);
+  backdrop-filter: blur(5px);
+}
+.inner-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.btn-login, .btn-register {
+  width: 100%;
 }
 </style>

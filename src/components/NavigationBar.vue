@@ -3,7 +3,7 @@
     <div class="container-fluid">
 
 <!--      logo-->
-      <a class="navbar-brand" href=""><i class="bi bi-book-half"></i></a>
+      <a class="navbar-brand" href="" onclick="return false"><i class="bi bi-book-half"></i></a>
       <span class="navbar-text"><strong>Saury 学习平台</strong></span>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
