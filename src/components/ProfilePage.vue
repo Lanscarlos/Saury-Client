@@ -1,35 +1,54 @@
 <template>
   <div class="container">
-    <div class="shell">
-      <img :src="profile.avatar" :alt="profile.username" class="cover">
-      <div class="head">
-        <div class="data">
-          <div class="title1">{{profile.username}}<span>{{ profile.gender > -1 ? profile.gender === 1 ? '♂' : '♀' : '♂?♀' }}</span></div>
-          <div class="title2">{{profile.signature}}</div>
+    <el-card>
+      <div class="shell">
+        <img :src="profile.avatar" :alt="profile.username" class="cover">
+        <div class="head">
+          <div class="data">
+            <div class="title1">{{profile.username}}<span>{{ profile.gender > -1 ? profile.gender === 1 ? '♂' : '♀' : '♂?♀' }}</span></div>
+            <div class="title2">{{profile.signature}}</div>
+          </div>
         </div>
+
+        <el-divider />
+
+        <div style="margin-top: 128px; padding-right: 128px">
+          <el-form :model="form" label-width="120px">
+            <el-form-item label="邮箱">
+              <el-input v-model="user.email" disabled/>
+            </el-form-item>
+            <el-form-item label="昵称">
+              <el-input v-model="form.username" />
+            </el-form-item>
+            <el-form-item label="签名">
+              <el-input v-model="form.signature" />
+            </el-form-item>
+            <el-form-item label="性别">
+              <el-radio-group v-model="form.gender">
+                <el-radio :label="-1">保密</el-radio>
+                <el-radio :label="1">男</el-radio>
+                <el-radio :label="0">女</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="生日">
+              <el-date-picker
+                  v-model="form.birthday"
+                  type="date"
+                  placeholder="选择你的出生日期"
+                  style="width: 100%"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">保存资料</el-button>
+                <el-button>取消修改</el-button>
+              </el-form-item>
+            </el-form-item>
+          </el-form>
+        </div>
+
       </div>
-      <div class="foot">
-        <div class="tags">
-          <span class="tag">#HTML</span>
-          <span class="tag">#CSS</span>
-          <span class="tag">#JS</span>
-          <span class="tag">#JQ</span>
-          <span class="tag">#bootstrap</span>
-          <span class="tag">#PR</span>
-          <span class="tag">#AE</span>
-          <span class="tag">#Vscode</span>
-        </div>
-        <div class="introduce">
-          <p>
-            Hello everyone, I am a junior girl, I am very glad to have the opportunity to introduce myself to
-            you. I have a strong interest in CSS and love sports.
-            First, let me talk about my love of CSS. CSS is a language for web design and layout that makes web
-            pages beautiful, readable, and easy to navigate. One of the things I like about CSS is its
-            flexibility, by using different styles and layouts...
-          </p>
-        </div>
-      </div>
-    </div>
+    </el-card>
   </div>
 </template>
 
@@ -41,7 +60,13 @@ export default {
   data: function () {
     return {
       user: vuex.state.user,
-      profile: vuex.state.profile
+      profile: vuex.state.profile,
+      form: {
+        username: vuex.state.profile.username,
+        signature: vuex.state.profile.signature,
+        gender: vuex.state.profile.gender,
+        birthday: vuex.state.profile.birthday
+      }
     }
   }
 }
@@ -122,38 +147,6 @@ export default {
   font: 500 24px '';
 }
 
-.foot {
-  line-height: 26px;
-  color: #444;
-}
 
-.tags {
-  padding-left: 30px;
-  padding-top: 100px;
-  width: 250px;
-  float: left;
-  text-align: center;
-}
 
-.tag {
-  background: rgb(149, 178, 255);
-  color: #fff;
-  border-radius: 10px;
-  padding: 3px 8px;
-  font-size: 14px;
-  margin-right: 4px;
-  line-height: 35px;
-  cursor: pointer;
-}
-
-.tag:hover {
-  background: #eee4ad;
-  color: #444;
-}
-
-.introduce {
-  padding: 25px 0 0 35px;
-  width: 480px;
-  float: left;
-}
 </style>

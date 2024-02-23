@@ -29,7 +29,7 @@
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button class="btn-login" type="primary" @click="onSubmit">登录账号</el-button>
+              <el-button class="btn-login" color="#626aef" type="primary" @click="onSubmit">登录账号</el-button>
             </el-form-item>
             <el-form-item>
               <el-button class="btn-register">注册账号</el-button>
