@@ -12,7 +12,7 @@ import 'element-plus/dist/index.css'
 const app = createApp(App);
 
 /* 设置默认的请求路径 */
-axios.defaults.baseURL = "http://lanscarlos.top:1226";
+axios.defaults.baseURL = "http://localhost:8080";
 app.config.globalProperties.$axios = axios;
 
 /* 引入数据编码库 */

@@ -29,5 +29,16 @@ export default createStore({
             order_id: 0,
             order_index: 0
         }
+    },
+    mutations: {
+        updateUserProfile(state, user, profile) {
+            if (user != null) {
+                state.user = user
+            }
+
+            if (profile != null) {
+                state.profile = profile
+            }
+        }
     }
 })

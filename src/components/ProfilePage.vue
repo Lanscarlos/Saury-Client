@@ -146,7 +146,4 @@ export default {
   color: #fff;
   font: 500 24px '';
 }
-
-
-
 </style>

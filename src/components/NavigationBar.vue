@@ -50,10 +50,10 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <router-link class="nav-link" to="/publish">
               <i class="bi bi-plus-circle-fill"></i>
               <span> 发布笔记</span>
-            </a>
+            </router-link>
           </li>
 
           <li class="nav-item dropdown">

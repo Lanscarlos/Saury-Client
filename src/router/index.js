@@ -3,6 +3,8 @@ import Home from '../components/HomePage';
 import Recommendation from "@/components/RecommendationPage";
 import Profile from '../components/ProfilePage';
 import Login from "@/components/LoginPage";
+import Note from "@/components/NotePage";
+import NotePublish from "@/components/NotePublishPage";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -26,6 +28,16 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/note/:id',
+            name: 'note',
+            component: Note
+        },
+        {
+            path: '/publish',
+            name: 'publish',
+            component: NotePublish
         }
     ]
 });

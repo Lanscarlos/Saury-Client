@@ -26,10 +26,13 @@
                 <template #prefix>
                   <i class="bi bi-question-circle"></i>
                 </template>
+                <template #append>
+                  <el-button color="#626aef" @click="requestCode">{{ cooldown <= 0 ? '获取' : cooldown }}</el-button>
+                </template>
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button class="btn-login" color="#626aef" type="primary" @click="onSubmit">登录账号</el-button>
+              <el-button class="btn-login" color="#626aef" type="primary" @click="tryLogin">登录账号</el-button>
             </el-form-item>
             <el-form-item>
               <el-button class="btn-register">注册账号</el-button>
@@ -42,10 +45,14 @@
 </template>
 
 <script>
+import { ElMessage } from "element-plus";
+
 export default {
   name: "LoginPage",
   data:function(){
     return{
+      cooldown: 0,
+      codeDisplay: '获取',
       form: {
         email: '',
         password: '',
@@ -54,13 +61,79 @@ export default {
     }
   },
   methods:{
+    decrease() {
+      this.cooldown--;
+    },
+    requestCode() {
+      if (this.cooldown > 0) {
+        return
+      }
+
+      if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.form.email)) {
+        ElMessage({
+          showClose: true,
+          message: '邮箱格式错误',
+          type: 'error',
+        })
+        return;
+      }
+
+      this.$axios.post(
+          '/auth/requestVerificationCode',
+          this.$qs.stringify({
+            email: this.form.email
+          })
+      ).then((res) => {
+        console.log(res)
+        if (res.data.code === 200) {
+          ElMessage({
+            showClose: true,
+            message: '验证码发送成功！有效时间 10 分钟',
+            type: 'success',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '验证码发送失败！请联系工作人员',
+            type: 'error',
+          })
+        }
+      });
+
+      this.cooldown = 60;
+
+      const that = this;
+      const timer = setInterval(() => {
+        that.cooldown--;
+        if (that.cooldown <= 0) {
+          clearInterval(timer);
+        }
+      }, 1000);
+    },
     tryLogin(){
       // let user = this.$store.state.user
       console.log('tryLogin() ...')
       console.log(this.form.email)
       console.log(this.form.password)
 
-      if (!/^[0-9]*$/.test(this.login.email) || !/^\w+$/.test(this.form.password)) {
+      if (!/^[0-9]*$/.test(this.form.email) || !/^\w+$/.test(this.form.password)) {
+        alert("格式错误，请重新输入");
+        this.$router.go(0);
+        return
+      }
+
+      this.$axios.post(
+          '/auth/login',
+          this.$qs.stringify({
+            email: this.form.email,
+            password: this.form.password,
+            code: this.form.code
+          })
+      )
+
+
+
+      if (!/^[0-9]*$/.test(this.form.email) || !/^\w+$/.test(this.form.password)) {
         alert("格式错误，请重新输入");
         this.$router.go(0)
       } else {

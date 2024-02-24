@@ -4,13 +4,21 @@
       <div class="overlay"></div>
       <img src="../assets/svg/logo.svg" class="foreground" alt="...">
       <h1 class="title">计算机领域学习资源共享平台</h1>
+      <el-button type="primary" @click="onTest">测试</el-button>
     </div>
   </div>
 </template>
 
 <script>
+// import axios from "axios";
+
 export default {
-  name: "HomePage"
+  name: "HomePage",
+  methods: {
+    onTest() {
+      console.log("on test...")
+    }
+  }
 }
 </script>
 
