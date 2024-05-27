@@ -2,7 +2,7 @@
   <div class="container">
     <div v-if="notes.length === 0">
       <el-card class="note-item">
-        <el-empty description="暂无推荐" />
+        <el-empty description="暂未收藏文章" />
       </el-card>
     </div>
     <div v-else>
@@ -25,10 +25,7 @@
           <el-text>视频笔记</el-text>
         </div>
 
-        <p class="lead" @click="openNotePage(item.id)">
-          {{ item.title }}
-          <el-tag v-if="item.price !== 0" type="warning" style="margin-left: 5px">付费</el-tag>
-        </p>
+        <p class="lead" @click="openNotePage(item.id)">{{ item.title }}</p>
 
         <el-divider/>
 
@@ -50,7 +47,7 @@
 
 <script>
 export default {
-  name: "RecommendationPage",
+  name: "StarsPage",
   data: function () {
     return {
       notes: []
@@ -73,7 +70,13 @@ export default {
   },
   beforeMount() {
     this.$axios.post(
-        '/note/notes',
+        '/profile/stars',
+        {},
+        {
+          headers: {
+            'Authorization': sessionStorage.getItem('tokenValue')
+          }
+        }
     ).then((res) => {
       console.log('notes', res)
       this.notes = res.data.data.filter(item => item.state === 1)

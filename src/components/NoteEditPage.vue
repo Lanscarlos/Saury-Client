@@ -89,7 +89,7 @@ import axios from "axios";
 // import {getCookie} from "@/utils/cookie";
 
 export default {
-  name: "NotePublishPage",
+  name: "NoteEditPage",
   data: function () {
     const baseURL = axios.defaults.baseURL
     return {

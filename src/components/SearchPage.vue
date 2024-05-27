@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <div v-if="notes.length === 0">
+    <div v-if="results.length === 0">
       <el-card class="note-item">
-        <el-empty description="暂无推荐" />
+        <el-empty description="暂无搜索结果，请换一个关键词试试" />
       </el-card>
     </div>
     <div v-else>
-      <el-card class="note-item" v-for="item in notes" :key="item.id">
+      <el-card class="note-item" v-for="item in results" :key="item.id">
         <div v-if="item.type === 'text'">
           <el-icon>
             <Paperclip/>
@@ -25,10 +25,7 @@
           <el-text>视频笔记</el-text>
         </div>
 
-        <p class="lead" @click="openNotePage(item.id)">
-          {{ item.title }}
-          <el-tag v-if="item.price !== 0" type="warning" style="margin-left: 5px">付费</el-tag>
-        </p>
+        <p class="lead" @click="openNotePage(item.id)">{{ item.title }}</p>
 
         <el-divider/>
 
@@ -50,10 +47,12 @@
 
 <script>
 export default {
-  name: "RecommendationPage",
+  name: "SearchPage",
   data: function () {
+    const keyword = this.$route.params.keyword;
     return {
-      notes: []
+      keyword: keyword,
+      results: []
     }
   },
   methods: {
@@ -72,11 +71,12 @@ export default {
     }
   },
   beforeMount() {
+    const keyword = this.$route.params.keyword;
     this.$axios.post(
-        '/note/notes',
+        '/note/search/' + keyword,
     ).then((res) => {
-      console.log('notes', res)
-      this.notes = res.data.data.filter(item => item.state === 1)
+      console.log(res)
+      this.results = res.data.data.filter(item => item.state === 1)
     })
   }
 }

@@ -56,27 +56,51 @@
             </router-link>
           </li>
 
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" @click="onDropdownOpen">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-three-dots"></i>
               <span> 更多</span>
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">联系我们</a></li>
-              <li><a class="dropdown-item" href="#">未知</a></li>
+              <li>
+                <router-link class="nav-link" to="/stars">
+                  <span class="dropdown-item">我的收藏</span>
+                </router-link>
+              </li>
+              <li>
+                <router-link class="nav-link" to="/orders">
+                  <span class="dropdown-item">我的订单</span>
+                </router-link>
+              </li>
+              <li v-show="isAdmin">
+                <router-link class="nav-link" to="/admin">
+                  <span class="dropdown-item">后台管理</span>
+                </router-link>
+              </li>
+              <li>
+                <router-link class="nav-link" to="/">
+                  <span class="dropdown-item">联系我们</span>
+                </router-link>
+              </li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">关于我们</a></li>
+              <li @click="logout">
+                <router-link class="nav-link" to="/">
+                  <span class="dropdown-item">退出登录</span>
+                </router-link>
+              </li>
             </ul>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li>
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link disabled">Disabled</a>-->
+<!--          </li>-->
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <div class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="搜索文章" aria-label="Search" v-model="keyword">
+          <button class="btn btn-outline-success" @click="onSearch">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -85,14 +109,47 @@
 <script>
 // import { useRouter } from 'vue-router'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import {ElMessage} from "element-plus";
 
 export default {
   name: "NavigationBar",
   data: function () {
     return {
-      search: {
-        keyword: ''
+      isAdmin: false,
+      keyword: ''
+    }
+  },
+  methods: {
+    logout() {
+      sessionStorage.removeItem('tokenValue')
+      sessionStorage.removeItem('user')
+      this.$router.push({ name:'login' })
+    },
+    onDropdownOpen() {
+      const stringify = sessionStorage.getItem('user')
+      if (stringify == null) {
+        return
       }
+      const user = JSON.parse(stringify)
+      this.isAdmin = user.isAdmin
+    },
+    onSearch() {
+      if (!this.keyword) {
+        ElMessage({
+          showClose: true,
+          message: '请输入关键字',
+          type: 'error',
+        })
+        return
+      }
+
+      ElMessage({
+        showClose: true,
+        message: '正在搜索',
+        type: 'message',
+      })
+
+      this.$router.push({ name:'search', params: { keyword: this.keyword } })
     }
   }
 }

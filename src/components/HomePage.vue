@@ -4,7 +4,6 @@
       <div class="overlay"></div>
       <img src="../assets/svg/logo.svg" class="foreground" alt="...">
       <h1 class="title">计算机领域学习资源共享平台</h1>
-      <el-button type="primary" @click="onTest">测试</el-button>
     </div>
   </div>
 </template>
@@ -13,12 +12,7 @@
 // import axios from "axios";
 
 export default {
-  name: "HomePage",
-  methods: {
-    onTest() {
-      console.log("on test...")
-    }
-  }
+  name: "HomePage"
 }
 </script>
 
@@ -30,7 +24,7 @@ export default {
   height: 100%;
   width: 100%;
   z-index: -2;
-  background-image: url("../assets/background.png");
+  background-image: url("../assets/background/2.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

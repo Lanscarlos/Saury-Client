@@ -9,7 +9,7 @@ export function setCookie(key, val, exdays) {
 }
 
 /* 获取 Cookie */
-export function getCookie(cname){
+export function getCookie(cname) {
     let name = cname + "=";
     let ca = document.cookie.split(';');
     for(let i=0; i<ca.length; i++)
@@ -20,6 +20,6 @@ export function getCookie(cname){
     return null;
 }
 
-export function removeCookie(cname){
+export function removeCookie(cname) {
     setCookie(cname, '', -1);
 }

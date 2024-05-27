@@ -8,6 +8,7 @@ import qs from 'qs';
 import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
+import {autoLogin} from "@/utils/auth";
 
 const app = createApp(App);
 
@@ -34,14 +35,24 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.mount('#app')
 
 router.beforeEach((to, from, next) => {
+    if (sessionStorage.getItem('user') == null) {
+        autoLogin()
+    }
+    console.log('beforeEach: ' + from.name + ' -> ' + to.name)
     switch (to.name) {
         case 'login':
         case 'register': {
             next()
             break;
         }
-        case 'profile': {
-            if (vuex.state.user == null) {
+        case 'follow':
+        case 'profile':
+        case 'publish':
+        case 'stars':
+        case 'orders':
+        case 'note':
+        case 'admin': {
+            if (sessionStorage.getItem('user') == null) {
                 // 用户未登录
                 next({ name: 'login' })
             } else {
